@@ -72,7 +72,7 @@ def main(args: Args):
     torch.manual_seed(args.seed)
 
     ### Create and connect the real robot, wrap it to make it interfaceable with ManiSkill sim2real environments ###    
-    real_robot = create_real_robot(uid="so100")
+    real_robot = create_real_robot(uid="so101")
     real_robot.connect()
     real_agent = LeRobotRealAgent(real_robot)
 

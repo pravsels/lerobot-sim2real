@@ -1,0 +1,10 @@
+name: ms3-lerobot
+channels:
+  - defaults
+dependencies:
+  - python==3.11.8
+  - opencv
+  - pyqt
+  - qt
+  - sqlite
+prefix: /home/user/anaconda3/envs/ms3-lerobot

@@ -1,5 +1,14 @@
 # LeRobot Sim2Real
 
+
+Replicate conda environment 
+```
+conda env create -f environment.yml
+
+pip install -r requirements.txt
+```
+
+
 LeRobot Sim2real provides code to train with Reinforcement Learning in fast GPU parallelized simulation and rendering via [ManiSkill](https://github.com/haosulab/ManiSkill) and deploy to the real-world. The codebase is designed for use with the [🤗 LeRobot](https://github.com/huggingface/lerobot) library, which handles all of the hardware interfacing code. Once you clone and follow the installation instructions you can try out the [zero-shot RGB sim2real tutorial](./docs/zero_shot_rgb_sim2real.md) to train in pure simulation something that can pick up cubes in the real world like below:
 
 https://github.com/user-attachments/assets/ca20d10e-d722-48fe-94af-f57e0b2b2fcd

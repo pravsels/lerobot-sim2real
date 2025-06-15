@@ -46,7 +46,7 @@ class JointControlApp(ttk.Frame):
         toolbar = ttk.Frame(self)
         toolbar.pack(fill='x')
         ttk.Button(toolbar, text="Connect", command=self._connect).pack(side='left')
-        ttk.Button(toolbar, text="Reset Home", command=self._reset, state='disabled').pack(side='left')
+        ttk.Button(toolbar, text="Reset Home", command=self._reset).pack(side='left')
         ttk.Button(toolbar, text="Quit", command=self.master.quit).pack(side='right')
 
         container = ttk.Frame(self)

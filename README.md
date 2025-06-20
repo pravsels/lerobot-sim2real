@@ -16,15 +16,15 @@ python lerobot_sim2real/scripts/robot_recorder.py
 ```
 This will record the joint angles and end effector poses of the bot as well as save a video from the webcam. 
 
-To annotated the frames of the recorded videos with bboxes with Gemini, run: 
+To annotate the frames of the recorded videos with bboxes from Gemini, run: 
 ```
 python lerobot_sim2real/scripts/annotate_frames.py
 ```
 
-To take the original frames, robot state data, bboxes with gemini and prepare one metadata file with only useful information for an LLM, run: 
+To take the original frames, robot state data, bboxes from gemini and prepare one metadata file with only useful information for an LLM to view in its context, run: 
 ```
 python lerobot_sim2real/scripts/prepare_metadata_and_frames.py
 ```
-This will copy over the recorded frames, but will replace with frames with bboxes if present. This would obviously be helpful for an LLM. 
+This will copy over the recorded frames, but will replace them with frames with bboxes if present. Since frames with bboxes are more useful for an LLM. 
 
 

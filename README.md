@@ -8,6 +8,25 @@ conda env create -f environment.yml
 pip install -r requirements.txt
 ```
 
+## Record demonstration and data 
+
+To record a demonstration, run this script and then guide the robot to do a task: 
+```
+python lerobot_sim2real/scripts/robot_recorder.py
+```
+This will record the joint angles and end effector poses of the bot as well as save a video from the webcam. 
+
+To annotated the frames of the recorded videos with bboxes with Gemini, run: 
+```
+python lerobot_sim2real/scripts/annotate_frames.py
+```
+
+To take the original frames, robot state data, bboxes with gemini and prepare one metadata file with only useful information for an LLM, run: 
+```
+python lerobot_sim2real/scripts/prepare_metadata_and_frames.py
+```
+This will copy over the recorded frames, but will replace with frames with bboxes if present. This would obviously be helpful for an LLM. 
+
 
 LeRobot Sim2real provides code to train with Reinforcement Learning in fast GPU parallelized simulation and rendering via [ManiSkill](https://github.com/haosulab/ManiSkill) and deploy to the real-world. The codebase is designed for use with the [🤗 LeRobot](https://github.com/huggingface/lerobot) library, which handles all of the hardware interfacing code. Once you clone and follow the installation instructions you can try out the [zero-shot RGB sim2real tutorial](./docs/zero_shot_rgb_sim2real.md) to train in pure simulation something that can pick up cubes in the real world like below:
 

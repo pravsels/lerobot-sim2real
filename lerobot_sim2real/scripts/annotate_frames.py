@@ -146,6 +146,8 @@ class MainWindow(QMainWindow):
         self.prompt_edit = QTextEdit()
         self.prompt_edit.setFixedHeight(200)
         self.prompt_edit.setPlainText(SYSTEM_PROMPT)
+        preview_btn = QPushButton('Preview Mask')
+        preview_btn.clicked.connect(self.preview_mask)
         analyze_btn = QPushButton('Analyze')
         analyze_btn.clicked.connect(self.analyze)
         save_btn = QPushButton('Save')
@@ -153,7 +155,7 @@ class MainWindow(QMainWindow):
         self.status = QLabel('')
         self.viewer = ImageViewer()
         btn_layout = QHBoxLayout()
-        for w in (prev_btn, next_btn, analyze_btn, save_btn): btn_layout.addWidget(w)
+        for w in (prev_btn, next_btn, preview_btn, analyze_btn, save_btn): btn_layout.addWidget(w)
         vbox = QVBoxLayout()
         vbox.addLayout(btn_layout)
         vbox.addWidget(QLabel('Prompt:'))
@@ -186,6 +188,30 @@ class MainWindow(QMainWindow):
             self.idx += 1
             self.load_frame()
 
+    def preview_mask(self):
+        """Show exactly what gets sent to Gemini (masked outside the ROI)."""
+        if not hasattr(self, 'current_img'):
+            return
+
+        roi = self.viewer.get_roi()
+        if not roi:
+            QMessageBox.information(self, "No ROI", "Draw a box first to preview masked image.")
+            return
+
+        x, y = roi.x(), roi.y()
+        w, h = roi.width(), roi.height()
+
+        # Make a copy and zero out everything outside the ROI
+        masked = self.current_img.copy()
+        black = masked.copy(); black[:] = 0
+        masked[:, :] = black
+        masked[int(y):int(y+h), int(x):int(x+w)] = \
+            self.current_img[int(y):int(y+h), int(x):int(x+w)]
+
+        # Display it
+        self.viewer.load_image(masked)
+        self.status.setText("Previewing masked image")
+
     def analyze(self):
         if hasattr(self, 'current_img'):
             QApplication.setOverrideCursor(Qt.WaitCursor)
@@ -195,7 +221,7 @@ class MainWindow(QMainWindow):
                 roi = self.viewer.get_roi()
                 prompt = self.prompt_edit.toPlainText()
                 if roi:
-                    prompt += "\n\nIMPORTANT: Only detect objects inside the highlighted region; ignore everything outside."
+                    prompt += "\n\nIMPORTANT: ONLY detect objects inside the viewable region; ignore everything outside in the black part of the image. Its been blacked out for a reason, because the objects don't exist there!!! Please do not ignore this!!"
                     x, y = roi.x(), roi.y()
                     w, h = roi.width(), roi.height()
                     # mask out everything outside the ROI

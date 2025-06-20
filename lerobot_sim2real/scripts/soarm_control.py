@@ -12,7 +12,14 @@ from typing import Optional
 # Constants
 JOINT_LIMITS = [(-1.92, 1.92), (-1.75, 1.75), (-1.75, 1.57),
                 (-1.66, 1.66), (-2.79, 2.79), (-0.17, 1.75)]
-RESET_Q = np.array([0.0054, -0.0069, 0.0069, 1.598, 1.5789, 0.0177], dtype=np.float32)
+RESET_Q = np.array([
+        -0.002301533240824938,
+        -1.8849555253982544,
+        1.6870237588882446,
+        1.3218472003936768,
+        -0.0015343554550781846,
+        0.024848755449056625
+      ], dtype=np.float32)
 
 # IK result tuple
 IKResult = collections.namedtuple("IKResult", ["qpos", "err_norm", "steps", "success"])
